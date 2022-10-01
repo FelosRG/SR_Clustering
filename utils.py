@@ -1,18 +1,18 @@
 import os
-import geopandas as geopd
 import numpy as np
+import geopandas as geopd
+
+from pathlib import Path
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 
 
-script_path = os.path.realpath(__file__)
-script_dir  = "/".join(script_path.split("/")[:-1])
+# Método multiplataforma para manejar los directorios y paths.
+script_path = Path(os.path.realpath(__file__))
+script_dir  = script_path.parent.absolute()
+PATH_SHAPEFILE_MEXICO = str(script_dir / "Recursos" / "Mexico" / "Shapefiles" / "shape_file.shp")
 
-DIR_ROOT = script_dir
-PATH_SHAPEFILE_MEXICO = f"{DIR_ROOT}/Recursos/Mexico/Shapefiles/shape_file.shp"
-
-# Límites de las coordenadas que contienen el territorio
-# mexicano.
+# Límites de las coordenadas que contienen el territorio mexicano.
 LIM_SUP_LATITUD_MEX = 33
 LIM_INF_LATITUD_MEX = 14.5
 LIM_SUP_LONGITUD_MEX = -86.5
@@ -58,4 +58,3 @@ def generar_grid(resolucion):
     }
 
     return output
-

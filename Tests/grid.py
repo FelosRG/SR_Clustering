@@ -10,16 +10,16 @@ import numpy as np
 import geopandas as geopd
 import matplotlib.pyplot as plt
 
-script_path = os.path.realpath(__file__)
-script_dir  = "/".join(script_path.split("/")[:-1])
+from pathlib import Path
 
-DIR_ROOT = "/".join(script_path.split("/")[:-2])
-PATH_SHAPEFILE = f"{DIR_ROOT}/Recursos/Mexico/Shapefiles/shape_file.shp"
+script_path = Path(os.path.realpath(__file__))
+script_dir  = script_path.parent.absolute()
+DIR_ROOT = script_dir.parent.absolute()
 
-sys.path.append(DIR_ROOT)
+sys.path.append(str(DIR_ROOT))
 import utils
 
-geodf = geopd.read_file(PATH_SHAPEFILE)
+geodf = geopd.read_file(utils.PATH_SHAPEFILE_MEXICO)
 
 # Generamos el grid
 resolucion_str = input("\nIngrese una resolución (ejemplo: >> 30)\n>> ")
@@ -40,9 +40,9 @@ fig , ax = plt.subplots(1)
 
 ax.set_title(f"Test grid",weight="bold")
 ax.set_title(f"num puntos: {num_puntos}",loc="right")
-geodf.plot(ax=ax,color='white', edgecolor='black',linewidth=4)
+ax.set_title(f"resolución: {resolucion}",loc="left")
+geodf.plot(ax=ax,color='white', edgecolor='black',linewidth=2.5)
 ax.pcolormesh(X,Y,Z,shading="nearest",alpha=0.7)
-
 plt.show()
 
 print("Ok")
